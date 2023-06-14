@@ -6,7 +6,7 @@ In other words, yes, it gives you the ability to get achievements with mods enab
 
 # Installation
 
-1. Download latest patcher from releases
+1. Download latest binary of patcher from releases (or build it in case you know what you doing)
 2. Unzip it in eu4 directory (rightclick on eu4 on steam > Manage > Browse local files)
 3. Run eu4-checksum-patcher.exe
 
@@ -18,3 +18,8 @@ Conrats, you done! In case you see unsupported version error most likely Paradox
 | Windows | Yes |
 | Linux | Soon |
 | MacOS | Not planned |
+
+# TODO
+- [ ] Rewrite hex-search part in C
+- [ ] Reduce complexity of algorithm
+- [ ] Create some simple GUI
