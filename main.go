@@ -30,6 +30,8 @@ func main() {
 
 	if _, err := os.Stat("./eu4.exe"); errors.Is(err, os.ErrNotExist) {
 		fmt.Println("ERROR: Cannot locate eu4.exe in current folder")
+		fmt.Println("Press enter to exit")
+		fmt.Scanln()
 		return
 	}
 
@@ -92,8 +94,10 @@ func main() {
 	}
 
 	if !status {
-		fmt.Println("Unsupported version of eu4.exe or it's patched already. Patch has not been applied")
+		fmt.Println("ERROR: Unsupported version of eu4.exe or it's patched already. Patch has not been applied")
 		os.Remove("./eu4_backup.exe")
+		fmt.Println("Press enter to exit")
+		fmt.Scanln()
 		return
 	}
 
@@ -114,4 +118,6 @@ func main() {
 	out.Close()
 
 	fmt.Println("eu4.exe successfully patched")
+	fmt.Println("Press enter to exit")
+	fmt.Scanln()
 }
