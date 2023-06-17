@@ -49,16 +49,6 @@ func compareExes(exeAName, exeBName string) bool {
 		return false
 	}
 
-	// hexA := make([]string, len(byteA))
-	// for i := range byteA {
-	// 	hexA[i] = fmt.Sprintf("%X", byteA[i])
-	// }
-
-	// hexB := make([]string, len(byteB))
-	// for i := range byteB {
-	// 	hexB[i] = fmt.Sprintf("%X", byteB[i])
-	// }
-
 	return reflect.DeepEqual(byteA, byteB)
 }
 
@@ -101,7 +91,6 @@ func applyPatch(originalFileName, finalFileName string) error {
 
 		if finalHex[i] == hexExists[0] {
 			matches++
-			// fmt.Println(matches, finalHex[i])
 			for j := range hexExists {
 				if (finalHex[i+j] == hexExists[j]) || (hexExists[j] == "??") {
 					matches++
