@@ -6,14 +6,13 @@ import (
 )
 
 func TestApplyPatchWindows(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	err := backupFile("./test_files/eu4_original.exe", "./test_files/eu4_test.exe")
 
 	if err != nil {
 		t.Error(err)
 	}
-
-	err = applyPatch(true, "./test_files/eu4_test", "./test_files/eu4_test", "windows")
+	err = applyPatchByte(true, "./test_files/eu4_test", "./test_files/eu4_test", "windows")
 
 	if err != nil {
 		t.Error(err)
@@ -28,15 +27,13 @@ func TestApplyPatchWindows(t *testing.T) {
 }
 
 func TestApplyPatchLinux(t *testing.T) {
-	// t.Parallel()
+	t.Parallel()
 	err := backupFile("./test_files/eu4_original", "./test_files/eu4_test")
 
 	if err != nil {
 		t.Error(err)
 	}
-
-	err = applyPatch(true, "./test_files/eu4_test", "./test_files/eu4_test", "linux")
-
+	err = applyPatchByte(true, "./test_files/eu4_test", "./test_files/eu4_test", "linux")
 	if err != nil {
 		t.Error(err)
 	}
