@@ -129,6 +129,9 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 	matchesNeeded := len(hexExists)
 	matches := 0
 	status := false
+	if !test {
+		fmt.Println("Patching process started")
+	}
 	for i := range finalHex {
 
 		if finalHex[i] == hexExists[0] {
@@ -142,6 +145,9 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 				}
 			}
 			if matches >= matchesNeeded {
+				if !test {
+					fmt.Println("Needed hex-combination finded")
+				}
 				for k := range hexExists {
 					if hexExists[k] != "??" {
 						finalHex[i+k] = hexWanted[k]
