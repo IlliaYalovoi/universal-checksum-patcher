@@ -97,6 +97,10 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 		return errors.New("This OS is not supported")
 	}
 
+	go func() {
+		backupFile(originalFileName+fileExtension, originalFileName+"_backup"+fileExtension)
+	}()
+
 	if _, err := os.Stat(originalFileName + fileExtension); errors.Is(err, os.ErrNotExist) {
 		fmt.Printf("ERROR: Cannot locate %s in current folder\n", originalFileName+fileExtension)
 		if !test {
@@ -104,11 +108,6 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 			fmt.Scanln()
 		}
 		return errors.New("Cant find executable file")
-	}
-
-	err := backupFile(originalFileName+fileExtension, originalFileName+"_backup"+fileExtension)
-	if err != nil {
-		return err
 	}
 
 	originalByte, err := os.ReadFile(originalFileName + fileExtension)
@@ -132,9 +131,9 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 	if !test {
 		fmt.Println("Patching process started")
 	}
-	for i := range finalHex {
+	for i := 0; i < len(finalHex); i++ {
 
-		if finalHex[i] == hexExists[0] {
+		if finalHex[i] == hexExists[0] || finalHex[i] == hexExists[1] {
 			matches++
 			for j := range hexExists {
 				if (finalHex[i+j] == hexExists[j]) || (hexExists[j] == "??") {

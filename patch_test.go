@@ -6,7 +6,7 @@ import (
 )
 
 func TestApplyPatchWindows(t *testing.T) {
-
+	// t.Parallel()
 	err := backupFile("./test_files/eu4_original.exe", "./test_files/eu4_test.exe")
 
 	if err != nil {
@@ -28,7 +28,7 @@ func TestApplyPatchWindows(t *testing.T) {
 }
 
 func TestApplyPatchLinux(t *testing.T) {
-
+	// t.Parallel()
 	err := backupFile("./test_files/eu4_original", "./test_files/eu4_test")
 
 	if err != nil {
