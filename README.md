@@ -21,6 +21,5 @@ Conrats, you done! In case you see unsupported version error most likely Paradox
 
 MacOS will be supported, if someone provide me executable file for analysis
 # TODO
-- [ ] Rewrite hex-search part in C
 - [ ] Reduce complexity of algorithm
 - [ ] Create some simple GUI
