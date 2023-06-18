@@ -109,7 +109,6 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 		}
 		return errors.New("Cant find executable file")
 	}
-
 	originalByte, err := os.ReadFile(originalFileName + fileExtension)
 	if err != nil {
 		return err
@@ -118,7 +117,6 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 	for i := range originalByte {
 		originalHex[i] = fmt.Sprintf("%X", originalByte[i])
 	}
-
 	hexExists = normalizeHex(hexExists)
 	hexWanted = normalizeHex(hexWanted)
 
@@ -133,7 +131,7 @@ func applyPatch(test bool, originalFileName, finalFileName, forceOS string) erro
 	}
 	for i := 0; i < len(finalHex); i++ {
 
-		if finalHex[i] == hexExists[0] || finalHex[i] == hexExists[1] {
+		if finalHex[i] == hexExists[0] && finalHex[i+len(hexExists)-1] == hexExists[len(hexExists)-1] {
 			matches++
 			for j := range hexExists {
 				if (finalHex[i+j] == hexExists[j]) || (hexExists[j] == "??") {
