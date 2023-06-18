@@ -2,9 +2,9 @@ package main
 
 func main() {
 
-	originalFileName := "eu4.exe"
-	finalFileName := "eu4.exe"
+	originalFileName := "eu4"
+	finalFileName := "eu4"
 
-	applyPatch(originalFileName, finalFileName)
+	applyPatch(false, originalFileName, finalFileName, "")
 
 }
