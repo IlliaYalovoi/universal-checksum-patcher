@@ -1,8 +1,8 @@
 # Universal Paradox games checksum patcher
 
-This is a lightweight patch, that forces game ignore checksum wherever it is used.
+This is a lightweight patch, that forces game ignore checksum when starting and loading ironman game.
 
-In other words, yes, it gives you the ability to get achievements with mods enabled. Check if your favourite game is supported right now
+In other words, yes, it gives you the ability to get achievements with mods enabled. And not giving you ability to use game console or connect to servers with other checksum.
 
 # Installation
 
