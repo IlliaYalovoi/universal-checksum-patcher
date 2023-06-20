@@ -62,8 +62,8 @@ func applyPatch(test bool, originalFileName, OS string) error {
 	var hexExistsLinux []string
 	var hexWantedLinux []string
 	// EU4
-	hexExistsEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8", "97", "79", "E9"}
-	hexWantedEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8", "97", "79", "E9"}
+	hexExistsEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8"}
+	hexWantedEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8"}
 	hexExistsEU4Linux := []string{"E8", "65", "95", "E5", "FF", "89", "C3", "E8", "38", "08", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
 	hexWantedEU4Linux := []string{"E8", "65", "95", "E5", "FF", "89", "C3", "E8", "38", "08", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
 	// HOI4
