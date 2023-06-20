@@ -1,10 +1,12 @@
 package main
 
+import "runtime"
+
 func main() {
 
 	originalFileName := "eu4"
 	finalFileName := "eu4"
 
-	applyPatchByte(false, originalFileName, finalFileName, "")
+	applyPatch(false, originalFileName, finalFileName, runtime.GOOS)
 
 }

@@ -12,7 +12,7 @@ func TestApplyPatchWindows(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	err = applyPatchByte(true, "./test_files/eu4_test", "./test_files/eu4_test", "windows")
+	err = applyPatch(true, "./test_files/eu4_test", "./test_files/eu4_test", "windows")
 
 	if err != nil {
 		t.Error(err)
@@ -33,7 +33,7 @@ func TestApplyPatchLinux(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	err = applyPatchByte(true, "./test_files/eu4_test", "./test_files/eu4_test", "linux")
+	err = applyPatch(true, "./test_files/eu4_test", "./test_files/eu4_test", "linux")
 	if err != nil {
 		t.Error(err)
 	}
