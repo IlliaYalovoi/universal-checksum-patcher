@@ -61,11 +61,15 @@ func applyPatch(test bool, originalFileName, OS string) error {
 	var hexWantedWindows []string
 	var hexExistsLinux []string
 	var hexWantedLinux []string
+	var hexExistsDarwin []string
+	var hexWantedDarwin []string
 	// EU4
 	hexExistsEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8"}
 	hexWantedEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8"}
 	hexExistsEU4Linux := []string{"E8", "65", "95", "E5", "FF", "89", "C3", "E8", "38", "08", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
 	hexWantedEU4Linux := []string{"E8", "65", "95", "E5", "FF", "89", "C3", "E8", "38", "08", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
+	hexExistsEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
+	hexWantedEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
 	// HOI4
 	hexExistsHOI4Windows := []string{"48", "8D", "0D", "77", "B6", "C9", "01", "E8", "CA", "86", "B3", "01", "85", "C0", "0F", "94", "C3", "E8", "90"}
 	hexWantedHOI4Windows := []string{"48", "8D", "0D", "77", "B6", "C9", "01", "E8", "CA", "86", "B3", "01", "31", "C0", "0F", "94", "C3", "E8", "90"}
@@ -78,6 +82,9 @@ func applyPatch(test bool, originalFileName, OS string) error {
 
 		hexExistsLinux = hexExistsEU4Linux
 		hexWantedLinux = hexWantedEU4Linux
+
+		hexExistsDarwin = hexExistsEU4Darwin
+		hexWantedDarwin = hexWantedEU4Darwin
 	} else if strings.Contains(originalFileName, "hoi4") {
 		if OS == "linux" {
 
@@ -103,6 +110,10 @@ func applyPatch(test bool, originalFileName, OS string) error {
 		fileExtension = ""
 		hexExists = hexExistsLinux
 		hexWanted = hexWantedLinux
+	case "darwin":
+		fileExtension = ""
+		hexExists = hexExistsDarwin
+		hexWanted = hexWantedDarwin
 	default:
 		fileExtension = ""
 		return fmt.Errorf("this OS (%s) is not supported", OS)

@@ -15,7 +15,7 @@ Conrats, you done! In case you see unsupported version error most likely Paradox
 # Supported games and platforms
 |  | Windows | Linux | MacOS |
 | ---| --- | ---| --- |
-| Europa Universalis IV | Yes :heavy_check_mark: | Yes :heavy_check_mark: | No :x: |
+| Europa Universalis IV | Yes :heavy_check_mark: | Yes :heavy_check_mark: | Maybe |
 | Hearts of Iron IV | Yes :heavy_check_mark: | No :x: | No :x: |
 
 MacOS will be supported, if someone provide me executable files for analysis.
