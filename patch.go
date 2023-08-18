@@ -73,8 +73,8 @@ func applyPatch(test bool, originalFileName, OS string) error {
 	// HOI4
 	hexExistsHOI4Windows := []string{"48", "8D", "0D", "77", "B6", "C9", "01", "E8", "CA", "86", "B3", "01", "85", "C0", "0F", "94", "C3", "E8", "90"}
 	hexWantedHOI4Windows := []string{"48", "8D", "0D", "77", "B6", "C9", "01", "E8", "CA", "86", "B3", "01", "31", "C0", "0F", "94", "C3", "E8", "90"}
-	hexExistsHOI4Linux := []string{}
-	hexWantedHOI4Linux := []string{}
+	hexExistsHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "85", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
+	hexWantedHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "31", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
 
 	if strings.Contains(originalFileName, "eu4") {
 		hexExistsWindows = hexExistsEU4Windows
@@ -86,10 +86,6 @@ func applyPatch(test bool, originalFileName, OS string) error {
 		hexExistsDarwin = hexExistsEU4Darwin
 		hexWantedDarwin = hexWantedEU4Darwin
 	} else if strings.Contains(originalFileName, "hoi4") {
-		if OS == "linux" {
-
-			return errors.New("patching linux version of Hearts of Iron IV is not currently supported")
-		}
 
 		hexExistsWindows = hexExistsHOI4Windows
 		hexWantedWindows = hexWantedHOI4Windows
@@ -178,8 +174,6 @@ func applyPatch(test bool, originalFileName, OS string) error {
 					}
 				}
 				status = true
-
-				break
 			}
 		}
 	}
