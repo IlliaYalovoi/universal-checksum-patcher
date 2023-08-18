@@ -16,6 +16,6 @@ Conrats, you done! In case you see unsupported version error most likely Paradox
 |  | Windows | Linux | MacOS |
 | ---| --- | ---| --- |
 | Europa Universalis IV | Yes :heavy_check_mark: | Yes :heavy_check_mark: | Maybe |
-| Hearts of Iron IV | Yes :heavy_check_mark: | No :x: | No :x: |
+| Hearts of Iron IV | Yes :heavy_check_mark: | Yes :heavy_check_mark: | No :x: |
 
 MacOS will be supported, if someone provide me executable files for analysis.
