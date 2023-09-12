@@ -13,9 +13,9 @@ In other words, yes, it gives you the ability to get achievements with mods enab
 Conrats, you done! In case you see unsupported version error most likely Paradox broke something and all you can do is wait until i update patch.
 
 # Supported games and platforms
-|  | Windows | Linux | MacOS |
-| ---| --- | ---| --- |
-| Europa Universalis IV | Yes :heavy_check_mark: | Currently broken :x: | Maybe |
-| Hearts of Iron IV | Yes :heavy_check_mark: | Yes :heavy_check_mark: | No :x: |
+|                       | Windows                | Linux                  | MacOS  |
+|-----------------------|------------------------|------------------------|--------|
+| Europa Universalis IV | Yes :heavy_check_mark: | Yes :heavy_check_mark: | Maybe  |
+| Hearts of Iron IV     | Yes :heavy_check_mark: | Yes :heavy_check_mark: | No :x: |
 
 MacOS will be supported, if someone provide me executable files for analysis.
