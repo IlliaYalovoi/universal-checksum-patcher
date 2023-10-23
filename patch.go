@@ -52,98 +52,75 @@ func compareExes(exeAName, exeBName string) bool {
 	return reflect.DeepEqual(byteA, byteB)
 }
 
-func applyPatch(test bool, originalFileName, OS string) error {
+var (
+	hexExistsEU4Windows = []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8"}
+	hexWantedEU4Windows = []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8"}
 
+	hexExistsHOI4Windows = []string{"48", "??", "??", "??", "??", "??", "??", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8"}
+	hexWantedHOI4Windows = []string{"48", "??", "??", "??", "??", "??", "??", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8"}
+)
+
+func applyPatch(originalFileName, OS string) error {
+	// SUPPORT DROPPED
+	//hexExistsEU4Linux := []string{"E8", "??", "??", "E5", "FF", "89", "C3", "E8", "??", "??", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
+	//hexWantedEU4Linux := []string{"E8", "??", "??", "E5", "FF", "89", "C3", "E8", "??", "??", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
+	//hexExistsEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
+	//hexWantedEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
+	//hexExistsHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "85", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
+	//hexWantedHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "31", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
+
+	var hexExists, hexWanted []string
 	var fileExtension string
-	var hexExists []string
-	var hexWanted []string
-	var hexExistsWindows []string
-	var hexWantedWindows []string
-	var hexExistsLinux []string
-	var hexWantedLinux []string
-	var hexExistsDarwin []string
-	var hexWantedDarwin []string
-	// EU4
-	hexExistsEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8"}
-	hexWantedEU4Windows := []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8"}
-	hexExistsEU4Linux := []string{"E8", "??", "??", "E5", "FF", "89", "C3", "E8", "??", "??", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	hexWantedEU4Linux := []string{"E8", "??", "??", "E5", "FF", "89", "C3", "E8", "??", "??", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	hexExistsEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	hexWantedEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	// HOI4
-	hexExistsHOI4Windows := []string{"48", "8D", "0D", "77", "B6", "C9", "01", "E8", "CA", "86", "B3", "01", "85", "C0", "0F", "94", "C3", "E8", "90"}
-	hexWantedHOI4Windows := []string{"48", "8D", "0D", "77", "B6", "C9", "01", "E8", "CA", "86", "B3", "01", "31", "C0", "0F", "94", "C3", "E8", "90"}
-	hexExistsHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "85", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
-	hexWantedHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "31", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
 
 	if strings.Contains(originalFileName, "eu4") {
-		hexExistsWindows = hexExistsEU4Windows
-		hexWantedWindows = hexWantedEU4Windows
+		hexExists = hexExistsEU4Windows
+		hexWanted = hexWantedEU4Windows
 
-		hexExistsLinux = hexExistsEU4Linux
-		hexWantedLinux = hexWantedEU4Linux
-
-		hexExistsDarwin = hexExistsEU4Darwin
-		hexWantedDarwin = hexWantedEU4Darwin
 	} else if strings.Contains(originalFileName, "hoi4") {
 
-		hexExistsWindows = hexExistsHOI4Windows
-		hexWantedWindows = hexWantedHOI4Windows
-
-		hexExistsLinux = hexExistsHOI4Linux
-		hexWantedLinux = hexWantedHOI4Linux
+		hexExists = hexExistsHOI4Windows
+		hexWanted = hexWantedHOI4Windows
 
 	} else {
-		return errors.New("not supported executable")
+		return fmt.Errorf("not supported executable")
 	}
 
 	switch OS {
 	case "windows":
 		fileExtension = ".exe"
-		hexExists = hexExistsWindows
-		hexWanted = hexWantedWindows
-	case "linux":
-		fileExtension = ""
-		hexExists = hexExistsLinux
-		hexWanted = hexWantedLinux
-	case "darwin":
-		fileExtension = ""
-		hexExists = hexExistsDarwin
-		hexWanted = hexWantedDarwin
 	default:
-		fileExtension = ""
 		return fmt.Errorf("this OS (%s) is not supported", OS)
 
 	}
 
 	byteExists := make([]byte, len(hexExists))
 	byteWanted := make([]byte, len(hexWanted))
-	for i, h := range hexExists {
+	for i := range hexExists {
 		var value int64
-		if h == "??" {
+		if hexExists[i] == "??" {
 			value = 0
 		} else {
-			value, _ = strconv.ParseInt(h, 16, 16)
+			value, _ = strconv.ParseInt(hexExists[i], 16, 16)
 		}
 		byteExists[i] = byte(value)
 	}
-	for i, h := range hexWanted {
+	for i := range hexWanted {
 		var value int64
-		if h == "??" {
+		if hexWanted[i] == "??" {
 			value = 0
 		} else {
-			value, _ = strconv.ParseInt(h, 16, 16)
+			value, _ = strconv.ParseInt(hexWanted[i], 16, 16)
 		}
 		byteWanted[i] = byte(value)
+	}
+
+	if _, err := os.Stat(originalFileName + fileExtension); errors.Is(err, os.ErrNotExist) {
+		return fmt.Errorf("cannot locate %s in current folder", originalFileName+fileExtension)
 	}
 
 	go func() {
 		backupFile(originalFileName+fileExtension, originalFileName+"_backup"+fileExtension)
 	}()
-
-	if _, err := os.Stat(originalFileName + fileExtension); errors.Is(err, os.ErrNotExist) {
-		return fmt.Errorf("cannot locate %s in current folder", originalFileName+fileExtension)
-	}
 
 	originalByte, err := os.ReadFile(originalFileName + fileExtension)
 	if err != nil {
@@ -179,7 +156,6 @@ func applyPatch(test bool, originalFileName, OS string) error {
 	}
 
 	if !status {
-
 		os.Remove(originalFileName + "_backup" + fileExtension)
 		return fmt.Errorf("unsupported version of %s or it's patched already. Patch has not been applied", originalFileName+fileExtension)
 	}
@@ -189,8 +165,14 @@ func applyPatch(test bool, originalFileName, OS string) error {
 		return err
 	}
 
-	out.Write(finalByte)
-	out.Close()
+	_, err = out.Write(finalByte)
+	if err != nil {
+		return err
+	}
+	err = out.Close()
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
