@@ -46,9 +46,9 @@ func main() {
 
 	switch result {
 	case "Europa Universalis IV":
-		err = applyPatch(debugMode, "eu4", OS)
+		err = applyPatch("eu4", OS)
 	case "Hearts of Iron IV":
-		err = applyPatch(debugMode, "hoi4", OS)
+		err = applyPatch("hoi4", OS)
 	}
 
 	if err != nil {
@@ -59,5 +59,4 @@ func main() {
 	}
 	fmt.Println("Press enter to exit")
 	fmt.Scanln()
-
 }
