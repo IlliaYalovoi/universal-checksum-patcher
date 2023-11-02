@@ -7,33 +7,16 @@ import (
 	"github.com/manifoldco/promptui"
 )
 
-var debugMode = false
-
 func main() {
 
 	OS := runtime.GOOS
 
-	if debugMode {
-
-		promptOSChoice := promptui.Select{
-			Label:    fmt.Sprintf("Choose desired OS"),
-			Items:    []string{"Windows", "Linux", "Darwin"},
-			HideHelp: true,
-		}
-		_, desiredOS, _ := promptOSChoice.Run()
-
-		switch desiredOS {
-		case "windows":
-			OS = "windows"
-		case "linux":
-			OS = "linux"
-		case "darwin":
-			OS = "darwin"
-		}
-	}
 	promptGame := promptui.Select{
-		Label:    "Select game to patch",
-		Items:    []string{"Europa Universalis IV", "Hearts of Iron IV"},
+		Label: "Select game to patch",
+		Items: []string{
+			"Europa Universalis IV",
+			"Hearts of Iron IV",
+		},
 		HideHelp: true,
 	}
 
@@ -57,6 +40,7 @@ func main() {
 	} else {
 		fmt.Println("Patch successfully installed, your original executable has been backuped in [original name]_backup")
 	}
+
 	fmt.Println("Press enter to exit")
 	fmt.Scanln()
 }

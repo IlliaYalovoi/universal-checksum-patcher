@@ -53,21 +53,14 @@ func compareExes(exeAName, exeBName string) bool {
 }
 
 var (
-	hexExistsEU4Windows = []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8"}
-	hexWantedEU4Windows = []string{"48", "8D", "0D", "??", "??", "??", "01", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8"}
+	hexExistsEU4Windows = []string{"48", "8D", "0D", "??", "??", "??", "??", "E8", "??", "??", "??", "??", "85", "C0", "0F", "94", "C3", "E8"}
+	hexWantedEU4Windows = []string{"48", "8D", "0D", "??", "??", "??", "??", "E8", "??", "??", "??", "??", "31", "C0", "0F", "94", "C3", "E8"}
 
-	hexExistsHOI4Windows = []string{"48", "??", "??", "??", "??", "??", "??", "E8", "??", "??", "??", "01", "85", "C0", "0F", "94", "C3", "E8"}
-	hexWantedHOI4Windows = []string{"48", "??", "??", "??", "??", "??", "??", "E8", "??", "??", "??", "01", "31", "C0", "0F", "94", "C3", "E8"}
+	hexExistsHOI4Windows = []string{"48", "??", "??", "??", "??", "??", "??", "E8", "??", "??", "??", "??", "85", "C0", "0F", "94", "C3", "E8"}
+	hexWantedHOI4Windows = []string{"48", "??", "??", "??", "??", "??", "??", "E8", "??", "??", "??", "??", "31", "C0", "0F", "94", "C3", "E8"}
 )
 
 func applyPatch(originalFileName, OS string) error {
-	// SUPPORT DROPPED
-	//hexExistsEU4Linux := []string{"E8", "??", "??", "E5", "FF", "89", "C3", "E8", "??", "??", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	//hexWantedEU4Linux := []string{"E8", "??", "??", "E5", "FF", "89", "C3", "E8", "??", "??", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	//hexExistsEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "85", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	//hexWantedEU4Darwin := []string{"E8", "7A", "C5", "76", "01", "89", "C3", "E8", "93", "A6", "EC", "FF", "31", "F6", "31", "DB", "40", "0F", "94", "C6", "48", "89", "C7"}
-	//hexExistsHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "85", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
-	//hexWantedHOI4Linux := []string{"E8", "20", "70", "F8", "FE", "41", "89", "C7", "31", "DB", "31", "C0", "0F", "94", "C3", "E8", "51", "87", "B8", "FF"}
 
 	var hexExists, hexWanted []string
 	var fileExtension string
