@@ -43,5 +43,5 @@ func main() {
 	}
 
 	fmt.Println("Press enter to exit")
-	fmt.Scanln()
+	_, _ = fmt.Scanln()
 }
