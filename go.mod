@@ -1,4 +1,4 @@
-module github.com/goshathebusiness/eu4-checksum-patcher
+module github.com/goshathebusiness/universal-checksum-patcher
 
 go 1.19
 
