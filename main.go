@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/manifoldco/promptui"
 )
 
 const (
@@ -11,37 +9,44 @@ const (
 	hoi4 = "hoi4.exe"
 )
 
+var l *logger
+
 func main() {
-	prompt := promptui.Select{
-		Label: "Select game to patch",
-		Items: []string{
-			"Europa Universalis IV",
-			"Hearts of Iron IV",
-		},
-		HideHelp: true,
-	}
+	l = newLogger()
 
-	_, result, err := prompt.Run()
+	func() {
+		filesInDir, err := getFilesInCurrentDir()
+		if err != nil {
+			l.Error(err)
+			return
+		}
 
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		return
-	}
+		filesToPatch := make([]string, 0)
+		for _, file := range filesInDir {
+			if file == eu4 || file == hoi4 {
+				l.Infof("found %s in current directory", file)
+				filesToPatch = append(filesToPatch, file)
+			}
+		}
 
-	switch result {
-	case "Europa Universalis IV":
-		err = applyPatch(eu4)
-	case "Hearts of Iron IV":
-		err = applyPatch(hoi4)
-	}
+		if len(filesToPatch) == 0 {
+			l.Error(errCantLocate)
+			return
+		}
 
-	if err != nil {
-		fmt.Println("ERROR:", err)
-		fmt.Println("Wasn't not installed, file hasn't changed")
-	} else {
-		fmt.Println("Patch successfully installed, your original executable has been backuped in [original name].backup")
-	}
+		for _, file := range filesToPatch {
+			l.Infof("patching %s", file)
+			err = applyPatch(file)
+			if err != nil {
+				l.Error(err)
+				l.Info("patch wasn't installed, no file have been changed")
+				return
+			}
+			l.Infof("patch successfully installed, original executable has been backed up in %s.backup", file)
+		}
 
-	fmt.Println("Press enter to exit")
+	}()
+
+	l.Info("press enter to exit...")
 	_, _ = fmt.Scanln()
 }

@@ -1,16 +1,17 @@
-# Universal Paradox games checksum patcher
+# Paradox games checksum patcher
 
-This is a patch, that forces game ignore checksum when starting and loading ironman game.
+This is a patcher, that forces game ignore checksum when starting and loading ironman game.
+It gives you ability to use mods, that change checksum, and still get achievements.
+Patcher DON'T give you ability to use console or use achievement-disabler game rules and earn achievements.
 
-In other words, yes, it gives you the ability to get achievements with mods enabled. And not giving you ability to use game console or connect to servers with other checksum.
+# IMPORTANT
+Patcher modifying only currently existing game executable, if Paradox release new version of game, you need to run patcher again.
 
 # Installation
 
-1. Download latest binary of patcher from releases (or build it if you know what you doing)
-2. Unzip it in game directory (right click on game on steam > Manage > Browse local files)
-3. Run universal-checksum-patcher.exe
-
-Congrats, you're done! In case you see unsupported version error most likely Paradox broke something and all you can do is wait until I update patch. Most likely i'll update patch when I decide to play, so feel free to get needed byte code and modify source code (I'll merge your pull request if you decide to do that. Or create fork, I don't care)
+1. Download latest binary of patcher from releases (or build it from source if you know what you doing)
+2. Unzip it in game directory (right click on game on steam > Manage > Browse local files). `universal-checksum-patcher.exe` should be next to your `eu4.exe` or `hoi4.exe`
+3. Run `universal-checksum-patcher.exe`
 
 # Supported games and platforms
 |                       | Windows                | Linux(native) | MacOS  |
