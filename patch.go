@@ -17,7 +17,7 @@ func applyPatch(filename string) error {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
 
-	err = modifyBytes(bytes)
+	err = modifyBytes(filename, bytes)
 	if err != nil {
 		return fmt.Errorf("failed to modify bytes: %w", err)
 	}
@@ -45,22 +45,27 @@ func applyPatch(filename string) error {
 }
 
 func isStartCandidate(bytes []byte) bool {
-	return isSlicesEqual(bytes, start1) || isSlicesEqual(bytes, start2) || isSlicesEqual(bytes, start3)
+	return isSlicesEqual(bytes, start1) ||
+		isSlicesEqual(bytes, start2) ||
+		isSlicesEqual(bytes, start3) ||
+		isSlicesEqual(bytes, start4)
 }
 
 func isEndCandidate(bytes []byte) bool {
-	return isSlicesEqual(bytes, end)
+	return isSlicesEqual(bytes, end) ||
+		isSlicesEqual(bytes, endEU5)
 }
 
-func modifyBytes(bytes []byte) error {
+func modifyBytes(filename string, bytes []byte) error {
 	matchesCount := 0
+	bytesLength := len(bytes)
 
-	for i := 0; i <= len(bytes)-startLength; i++ {
+	for i := 0; i <= bytesLength-startLength; i++ {
 		if isStartCandidate(bytes[i : i+startLength]) {
-			for j := i + startLength; j <= i+startLength+limit && j <= len(bytes)-endLength; j++ {
+			for j := i + startLength; j <= i+startLength+limit && j <= bytesLength-endLength; j++ {
 				if isEndCandidate(bytes[j : j+endLength]) {
 					l.Tracef("found match #%d", matchesCount+1)
-					copy(bytes[j:j+len(replacement)], replacement)
+					copy(bytes[j:j+replacementLength], replacementMap[filename])
 					matchesCount++
 					break
 				}

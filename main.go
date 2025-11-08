@@ -6,10 +6,18 @@ import (
 
 const (
 	eu4  = "eu4.exe"
+	eu5  = "eu5.exe"
 	hoi4 = "hoi4.exe"
 )
 
-var l *logger
+var (
+	l    *logger
+	exes = map[string]bool{
+		eu4:  true,
+		eu5:  true,
+		hoi4: true,
+	}
+)
 
 func main() {
 	l = newLogger()
@@ -23,7 +31,7 @@ func main() {
 
 		filesToPatch := make([]string, 0)
 		for _, file := range filesInDir {
-			if file == eu4 || file == hoi4 {
+			if exes[file] {
 				l.Infof("found %s in current directory", file)
 				filesToPatch = append(filesToPatch, file)
 			}
