@@ -1,6 +1,6 @@
 # Paradox games checksum patcher
 
-This is a patcher, that forces game ignore checksum when starting and loading ironman game.
+This is a patcher, that forces game ignore checksum on starting and loading ironman game.
 It gives you ability to use mods, that change checksum, and still get achievements.
 Patcher DON'T give you ability to use console or use achievement-disabler game rules and earn achievements.
 
@@ -17,4 +17,5 @@ Patcher modifying only currently existing game executable, if Paradox release ne
 |                       | Windows                | Linux(native) | MacOS  |
 |-----------------------|------------------------|---------------|--------|
 | Europa Universalis IV | Yes :heavy_check_mark: | No :x:        | No :x: |
+| Europa Universalis V  | Yes :heavy_check_mark: | No :x:        | No :x: |
 | Hearts of Iron IV     | Yes :heavy_check_mark: | No :x:        | No :x: |
