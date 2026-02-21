@@ -20,9 +20,19 @@ var (
 	replacementEU5    = []byte{0x31, 0xC0, 0x0F, 0x94, 0xC1, 0x88}
 	replacementLength = len(replacement)
 
-	replacementMap = map[string][]byte{
-		eu4:  replacement,
-		eu5:  replacementEU5,
-		hoi4: replacement,
+	replacementMapPE = map[string][]byte{
+		eu4exe:  replacement,
+		eu5exe:  replacementEU5,
+		hoi4exe: replacement,
 	}
+
+	replacementMapELF = map[string][]byte{
+		eu4bin:  replacement,
+		eu5bin:  replacementEU5,
+		hoi4bin: replacement,
+	}
+
+	// Native HOI4 ELF sequence where bytes [2:] are patched from:
+	// 85 C0 0F 94 C3 E8 -> 31 C0 0F 94 C3 E8
+	elfHOI4Needle = []byte{0x31, 0xDB, 0x85, 0xC0, 0x0F, 0x94, 0xC3, 0xE8}
 )

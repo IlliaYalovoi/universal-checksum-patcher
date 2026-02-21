@@ -1,9 +1,19 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
+)
+
+type binaryKind int
+
+const (
+	binaryKindUnknown binaryKind = iota
+	binaryKindPE
+	binaryKindELF
 )
 
 func applyPatch(filename string) error {
@@ -17,7 +27,15 @@ func applyPatch(filename string) error {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
 
-	err = modifyBytes(filename, bytes)
+	kind := detectBinaryKind(bytes)
+	switch kind {
+	case binaryKindPE:
+		err = patchPE(filename, bytes)
+	case binaryKindELF:
+		err = patchELF(filename, bytes)
+	default:
+		err = errUnsupportedBinaryFormat
+	}
 	if err != nil {
 		return fmt.Errorf("failed to modify bytes: %w", err)
 	}
@@ -44,6 +62,60 @@ func applyPatch(filename string) error {
 	return nil
 }
 
+func detectBinaryKind(bytes []byte) binaryKind {
+	if len(bytes) >= 4 &&
+		bytes[0] == 0x7f &&
+		bytes[1] == 'E' &&
+		bytes[2] == 'L' &&
+		bytes[3] == 'F' {
+		return binaryKindELF
+	}
+
+	if len(bytes) >= 2 &&
+		bytes[0] == 'M' &&
+		bytes[1] == 'Z' {
+		return binaryKindPE
+	}
+
+	return binaryKindUnknown
+}
+
+func patchPE(filename string, bytes []byte) error {
+	return modifyBytes(filename, bytes, replacementMapPE)
+}
+
+func patchELF(filename string, bytes []byte) error {
+	exeName := filepath.Base(filename)
+	if exeName == hoi4bin {
+		return patchELFHoi4(bytes)
+	}
+
+	return modifyBytes(filename, bytes, replacementMapELF)
+}
+
+func patchELFHoi4(data []byte) error {
+	matchesCount := 0
+	searchFrom := 0
+
+	for {
+		idx := bytes.Index(data[searchFrom:], elfHOI4Needle)
+		if idx < 0 {
+			break
+		}
+		idx += searchFrom
+		patchOffset := idx + 2
+		copy(data[patchOffset:patchOffset+replacementLength], replacement)
+		matchesCount++
+		searchFrom = idx + len(elfHOI4Needle)
+	}
+
+	if matchesCount == 0 {
+		return errNoMatch
+	}
+
+	return nil
+}
+
 func isStartCandidate(bytes []byte) bool {
 	return isSlicesEqual(bytes, start1) ||
 		isSlicesEqual(bytes, start2) ||
@@ -56,7 +128,13 @@ func isEndCandidate(bytes []byte) bool {
 		isSlicesEqual(bytes, endEU5)
 }
 
-func modifyBytes(filename string, bytes []byte) error {
+func modifyBytes(filename string, bytes []byte, replacementMap map[string][]byte) error {
+	exeName := filepath.Base(filename)
+	replacementBytes, ok := replacementMap[exeName]
+	if !ok {
+		return errUnsupportedExecutable
+	}
+
 	matchesCount := 0
 	bytesLength := len(bytes)
 
@@ -65,7 +143,7 @@ func modifyBytes(filename string, bytes []byte) error {
 			for j := i + startLength; j <= i+startLength+limit && j <= bytesLength-endLength; j++ {
 				if isEndCandidate(bytes[j : j+endLength]) {
 					l.Tracef("found match #%d", matchesCount+1)
-					copy(bytes[j:j+replacementLength], replacementMap[filename])
+					copy(bytes[j:j+replacementLength], replacementBytes)
 					matchesCount++
 					break
 				}
